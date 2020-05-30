@@ -93,13 +93,17 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * Árbol BST vacío
 	 */
 	public BinarySearchTreeImpl() {
-		// TODO HACER QUE THIS SEA EL NODO VACÍO
+		this.content = null;
+		this.setRightBST(emptyBST(this));
+		this.setLeftBST(emptyBST(this));
 			
 	}
 	
 	public BinarySearchTreeImpl(BinarySearchTreeImpl<T> father) {
-		// TODO HACER QUE THIS SEA EL NODO VACÍO, asignando como padre el parámetro recibido
-		
+		this.father = father;
+		this.content = null;
+		this.setRightBST(null);
+		this.setLeftBST(null);
 	}
 
 
@@ -186,13 +190,9 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 			return false;
 		
 		if(this.content == null) {	
-			BinarySearchTreeImpl<T> nodoVacio = new BinarySearchTreeImpl<T>();
-			nodoVacio.leftSubtree = null; 
-			nodoVacio.rightSubtree = null; 
-			nodoVacio.content = null;
-			nodoVacio.father = this;
-			this.setLeftBST(nodoVacio);
-			this.setRightBST(nodoVacio);
+
+			this.setLeftBST(emptyBST(this));
+			this.setRightBST(emptyBST(this));
 			return true;
 		}else {
 			
@@ -238,7 +238,14 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * @throws NoSuchElementException si alguno de los elementos a eliminar no está en el árbol           
 	 */
 	public void remove(T ... elements) {
-	    // TODO Implementar el método
+		
+		for(T element : elements) {
+			if(!this.contains(element))
+				throw new NoSuchElementException();
+		}	
+		for(T element : elements) 
+			this.remove(element);
+		
 	}
 	
 	/**
@@ -268,30 +275,25 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 				
 			}else if( (this.getLeftBST().content!=null) ^  (this.getRightBST().content!=null) ) { //Si tiene un hijo
 				
-				BinarySearchTreeImpl<T> nodoVacio = new BinarySearchTreeImpl<T>();
-				nodoVacio.leftSubtree = null; 
-				nodoVacio.rightSubtree = null; 
-				nodoVacio.content = null;
-				nodoVacio.father = this;
-				
 				if(this.getLeftBST().content!=null) 
 					this.content = getLeftBST().content;	
 				else if(this.getRightBST().content!=null) 
 					this.content = getRightBST().content;
 					
-				this.setLeftBST(nodoVacio);
-				this.setRightBST(nodoVacio);
+				this.setLeftBST(emptyBST(this));
+				this.setRightBST(emptyBST(this));
 				
 			}else { //Tiene 2 hijos
 				
+				BinarySearchTreeImpl<T> menorMayor = this.getRightBST();
 				
+				while(menorMayor.getLeftBST().content !=null)
+					menorMayor = menorMayor.getLeftBST();
+				
+				this.content = menorMayor.content;
+				this.getRightBST().remove(menorMayor.content);
 			}
-			
-			
 		}
-			
-			
-		
 	}
 	
 	/**
