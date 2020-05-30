@@ -330,9 +330,29 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 */
 	public void tagHeight() {
 	// TODO implementar el método
-		
+		if(this!=null) {
+			
+			this.setTag("height", 1);
+			
+			calculateHeight(this,0);
+		}
 	}
 	
+	private void calculateHeight(BinarySearchTreeImpl<T> tree, int prevHeight) {
+		
+		
+		int height = prevHeight+1;
+		tree.setTag("height", height);
+		
+		if(tree.getLeftBST().content!=null)  
+			calculateHeight(getLeftBST(), height);
+		
+		if(tree.getRightBST().content!=null) 
+			calculateHeight(getRightBST(), height);
+		
+		tree.setTag("height", height);
+		
+	}
 	
 	/**
 	 * Importante: Solamente se puede recorrer el árbol una vez
@@ -367,7 +387,9 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * 
 	 */
 	public void tagDecendents() {
-		calculateDecendents(this);
+		
+		if(this!=null)
+			calculateDecendents(this);
 	}
 		
 	private int calculateDecendents(BinarySearchTreeImpl<T> tree) {
