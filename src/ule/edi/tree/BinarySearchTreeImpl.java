@@ -271,7 +271,9 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		else {
 			
 			if(this.getLeftBST().content==null && this.getRightBST().content==null) { //Si es hoja
-				
+				this.content = null;
+				this.setLeftBST(null);
+				this.setRightBST(null);
 				
 			}else if( (this.getLeftBST().content!=null) ^  (this.getRightBST().content!=null) ) { //Si tiene un hijo
 				
@@ -328,6 +330,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 */
 	public void tagHeight() {
 	// TODO implementar el método
+		
 	}
 	
 	
@@ -364,11 +367,21 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * 
 	 */
 	public void tagDecendents() {
-	   // TODO Implementar el método
-		
+		calculateDecendents(this);
 	}
 		
-	
+	private int calculateDecendents(BinarySearchTreeImpl<T> tree) {
+		
+			int decendents = 0;
+			if(tree.getLeftBST().content!=null)  
+				decendents += calculateDecendents(getLeftBST())+1;
+			
+			if(tree.getRightBST().content!=null) 
+				decendents += calculateDecendents(getRightBST())+1;
+			
+			tree.setTag("decendents", decendents);
+			return decendents;
+	}
 	
 	/**	
 	 * Devuelve un iterador que recorre los elementos del arbol por niveles según 
