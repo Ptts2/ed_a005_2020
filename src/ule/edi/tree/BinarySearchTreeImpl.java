@@ -127,7 +127,6 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		}
 		
 		//Si no tiene elementos nulos
-		
 		iterador = elements.iterator();
 		int elemsIntroducidos = 0;
 		while(iterador.hasNext()) {
@@ -137,8 +136,6 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 				elemsIntroducidos++;
 			}
 		}
-		
-		
 		return elemsIntroducidos;
 	}
 
@@ -152,8 +149,20 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * @return numero de elementos insertados en el arbol (los que ya están no los inserta)
 	 */
 	public int insert(T ... elements) {
-		//	 si alguno es 'null', ni siquiera se comienza a insertar (no inserta ninguno)
-	    // TODO Implementar el método
+		
+		for(T element : elements) {
+			if(element == null)
+				return 0;
+		}
+		
+		int elemsIntroducidos = 0;
+		for (T element : elements) {
+			if(!this.contains(element)) {
+				this.insert(element);
+				elemsIntroducidos++;
+			}	
+			return elemsIntroducidos;
+		}
 		return 0;
 	}
 	
@@ -193,8 +202,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 				return this.getLeftBST().insert(element);
 			else
 				return false;
-		}
-			
+		}	
 	}
 	
 
@@ -207,9 +215,20 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * @return true si el elemento está en el árbol, false en caso contrario          
 	 */
 	public boolean contains(T element) {
-		// TODO Implementar el método
+				
+		if(element == null)
+			throw new IllegalArgumentException();
 		
-		return false;
+		if(this.content == null)
+			return false;
+		
+		if(element.compareTo(this.content)>0) //mayor
+			return this.getRightBST().contains(element);
+		else if(element.compareTo(this.content)<0)
+			return this.getLeftBST().contains(element);
+		else
+			return true;
+			
 	}
 	
 	/**
