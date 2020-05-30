@@ -386,12 +386,24 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 */
 
 	public Iterator<T> iteratorWidth() {
-		//	TODO Implementar método
-		// puede implementarse creando una lista con el recorrido en anchura de los elementos del árbol y devolver el iterador de dicha lista
-		return null;
+	
+		LinkedList<BinarySearchTreeImpl<T>> recorridoAnchura = new LinkedList<BinarySearchTreeImpl<T>>();
+		LinkedList<T> elementos = new LinkedList<T>();
+		
+		recorridoAnchura.add(this);
+		
+		while(recorridoAnchura.size()!=0) {
+			
+			BinarySearchTreeImpl<T> actual = recorridoAnchura.poll();
+			elementos.add(actual.content);
+			
+			if(actual.getLeftBST().content!=null)
+				recorridoAnchura.add(actual.getLeftBST());
+			if(actual.getRightBST().content!=null)
+				recorridoAnchura.add(actual.getRightBST());
+		}
+		return elementos.iterator();
 	}	
-	
-	
 
 	/**
 	 * Importante: Solamente se puede recorrer el árbol una vez
