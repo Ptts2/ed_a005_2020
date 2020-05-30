@@ -250,8 +250,48 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * @throws NoSuchElementException si el elemento a eliminar no está en el árbol           
 	 */
 	public void remove(T element) {
-		// TODO Implementar el método
+		
+		
+		if(element == null)
+			throw new IllegalArgumentException();
+		if(!this.contains(element))
+			throw new NoSuchElementException();
 			
+		if(element.compareTo(this.content)>0) 
+			this.getRightBST().remove(element);
+		else if(element.compareTo(this.content)<0)
+			this.getLeftBST().remove(element);
+		else {
+			
+			if(this.getLeftBST().content==null && this.getRightBST().content==null) { //Si es hoja
+				
+				
+			}else if( (this.getLeftBST().content!=null) ^  (this.getRightBST().content!=null) ) { //Si tiene un hijo
+				
+				BinarySearchTreeImpl<T> nodoVacio = new BinarySearchTreeImpl<T>();
+				nodoVacio.leftSubtree = null; 
+				nodoVacio.rightSubtree = null; 
+				nodoVacio.content = null;
+				nodoVacio.father = this;
+				
+				if(this.getLeftBST().content!=null) 
+					this.content = getLeftBST().content;	
+				else if(this.getRightBST().content!=null) 
+					this.content = getRightBST().content;
+					
+				this.setLeftBST(nodoVacio);
+				this.setRightBST(nodoVacio);
+				
+			}else { //Tiene 2 hijos
+				
+				
+			}
+			
+			
+		}
+			
+			
+		
 	}
 	
 	/**
