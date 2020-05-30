@@ -461,10 +461,75 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * 
 	 */
 	public int tagOnlySonInorder() {
-		// TODO Implementar el mÃ©todo
-		return 0;
-	}
 	
+		
+		int onlyChilds = 0;
+		
+		
+		LinkedList<BinarySearchTreeImpl<T>> recorridoAnchuraIzq = new LinkedList<BinarySearchTreeImpl<T>>();
+		LinkedList<BinarySearchTreeImpl<T>> elementosIzq = new LinkedList<BinarySearchTreeImpl<T>>();
+		
+		LinkedList<BinarySearchTreeImpl<T>> recorridoAnchuraDcha = new LinkedList<BinarySearchTreeImpl<T>>();
+		LinkedList<BinarySearchTreeImpl<T>> elementosDcha = new LinkedList<BinarySearchTreeImpl<T>>();
+		
+		if(getLeftBST() != null)
+		recorridoAnchuraIzq.add(getLeftBST());
+		
+		while(recorridoAnchuraIzq.size()!=0) {
+			
+			BinarySearchTreeImpl<T> actual = recorridoAnchuraIzq.poll();
+			elementosIzq.add(actual);
+			
+			if(actual.getLeftBST().content!=null)
+				recorridoAnchuraIzq.add(actual.getLeftBST());
+			if(actual.getRightBST().content!=null)
+				recorridoAnchuraIzq.add(actual.getRightBST());
+		}
+		
+		if(getRightBST() != null)
+		recorridoAnchuraDcha.add(getRightBST());
+		
+		while(recorridoAnchuraDcha.size()!=0) {
+			
+			BinarySearchTreeImpl<T> actual = recorridoAnchuraDcha.poll();
+			elementosDcha.add(actual);
+			
+			if(actual.getLeftBST().content!=null)
+				recorridoAnchuraDcha.add(actual.getLeftBST());
+			if(actual.getRightBST().content!=null)
+				recorridoAnchuraDcha.add(actual.getRightBST());
+		}
+		
+		
+		//Invertir las listas y añadir tags
+		
+		
+		while(!elementosIzq.isEmpty()) {
+			
+			BinarySearchTreeImpl<T> actual = elementosIzq.pollLast();
+			BinarySearchTreeImpl<T> padreActual = actual.father;
+			if(padreActual !=null && (padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) {
+				onlyChilds++;
+				actual.setTag("onlyChild", onlyChilds);
+				
+			}
+		}
+		
+		while(!elementosDcha.isEmpty()) {
+			
+			BinarySearchTreeImpl<T> actual = elementosDcha.pollLast();
+			BinarySearchTreeImpl<T> padreActual = actual.father;
+			if(padreActual !=null && (padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) {
+				onlyChilds++;
+				actual.setTag("onlyChild", onlyChilds);
+				System.out.println(actual.toString());
+			}
+		
+		}
+		
+		
+		return onlyChilds;		
+	}
 	
 	
 }
