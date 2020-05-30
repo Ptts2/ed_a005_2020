@@ -118,9 +118,28 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * @return numero de elementos insertados en el arbol (los que ya están no los inserta)
 	 */
 	public int insert(Collection<T> elements) {
-		//	 si alguno es 'null', ni siquiera se comienza a insertar (no inserta ninguno)
-		//TODO Implementar el método
-		return 0;
+		
+		Iterator<T> iterador = elements.iterator();
+		
+		while(iterador.hasNext()) {
+			if(iterador.next()==null)
+				return 0;
+		}
+		
+		//Si no tiene elementos nulos
+		
+		iterador = elements.iterator();
+		int elemsIntroducidos = 0;
+		while(iterador.hasNext()) {
+			T element = iterador.next();
+			if( !this.contains(element) ) {
+				this.insert(element);
+				elemsIntroducidos++;
+			}
+		}
+		
+		
+		return elemsIntroducidos;
 	}
 
 	/**
@@ -152,10 +171,30 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * @throws IllegalArgumentException si element es null           
 	 */
 	public boolean insert(T element) {
-    //	TODO Implementar el método
-	
-		return false;
-	
+		if(element == null)
+			throw new IllegalArgumentException();
+		if(this.contains(element))
+			return false;
+		
+		if(this.content == null) {	
+			BinarySearchTreeImpl<T> nodoVacio = new BinarySearchTreeImpl<T>();
+			nodoVacio.leftSubtree = null; 
+			nodoVacio.rightSubtree = null; 
+			nodoVacio.content = null;
+			nodoVacio.father = this;
+			this.setLeftBST(nodoVacio);
+			this.setRightBST(nodoVacio);
+			return true;
+		}else {
+			
+			if(element.compareTo(this.content)>0) //mayor
+				return this.getRightBST().insert(element);
+			else if(element.compareTo(this.content)<0)
+				return this.getLeftBST().insert(element);
+			else
+				return false;
+		}
+			
 	}
 	
 
