@@ -522,7 +522,6 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 			if(padreActual !=null && (padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) {
 				onlyChilds++;
 				actual.setTag("onlyChild", onlyChilds);
-				System.out.println(actual.toString());
 			}
 		
 		}
