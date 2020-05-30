@@ -55,6 +55,7 @@ public class BinarySearchTreeTests {
 			
 		ejemplo = new BinarySearchTreeImpl<Integer>();
 		ejemplo.insert(10, 20, 5, 2, 15, 30);
+		
 		Assert.assertEquals(ejemplo.toString(), "{10, {5, {2, ∅, ∅}, ∅}, {20, {15, ∅, ∅}, {30, ∅, ∅}}}");
 		
 		

@@ -164,10 +164,9 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 			if(!this.contains(element)) {
 				this.insert(element);
 				elemsIntroducidos++;
-			}	
-			return elemsIntroducidos;
+			}		
 		}
-		return 0;
+		return elemsIntroducidos;
 	}
 	
 	/**
@@ -191,6 +190,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		
 		if(this.content == null) {	
 
+			this.content = element;
 			this.setLeftBST(emptyBST(this));
 			this.setRightBST(emptyBST(this));
 			return true;
@@ -329,11 +329,9 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * 
 	 */
 	public void tagHeight() {
-	// TODO implementar el método
 		if(this!=null) {
 			
 			this.setTag("height", 1);
-			
 			calculateHeight(this,0);
 		}
 	}
