@@ -343,10 +343,10 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		tree.setTag("height", height);
 		
 		if(tree.getLeftBST().content!=null)  
-			calculateHeight(getLeftBST(), height);
+			calculateHeight(tree.getLeftBST(), height);
 		
 		if(tree.getRightBST().content!=null) 
-			calculateHeight(getRightBST(), height);
+			calculateHeight(tree.getRightBST(), height);
 		
 		tree.setTag("height", height);
 		
@@ -394,10 +394,10 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		
 			int decendents = 0;
 			if(tree.getLeftBST().content!=null)  
-				decendents += calculateDecendents(getLeftBST())+1;
+				decendents += calculateDecendents(tree.getLeftBST())+1;
 			
 			if(tree.getRightBST().content!=null) 
-				decendents += calculateDecendents(getRightBST())+1;
+				decendents += calculateDecendents(tree.getRightBST())+1;
 			
 			tree.setTag("decendents", decendents);
 			return decendents;
