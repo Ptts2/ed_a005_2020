@@ -185,8 +185,6 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	public boolean insert(T element) {
 		if(element == null)
 			throw new IllegalArgumentException();
-		if(this.contains(element))
-			return false;
 		
 		if(this.content == null) {	
 
@@ -281,7 +279,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 				
 				if(this.getLeftBST().content!=null) 
 					this.content = getLeftBST().content;	
-				else if(this.getRightBST().content!=null) 
+				else
 					this.content = getRightBST().content;
 					
 				this.setLeftBST(emptyBST(this));
@@ -331,11 +329,9 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 * 
 	 */
 	public void tagHeight() {
-		if(this!=null) {
-			
-			this.setTag("height", 1);
-			calculateHeight(this,0);
-		}
+
+		this.setTag("height", 1);
+		calculateHeight(this,0);
 	}
 	
 	private void calculateHeight(BinarySearchTreeImpl<T> tree, int prevHeight) {
@@ -388,8 +384,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	 */
 	public void tagDecendents() {
 		
-		if(this!=null)
-			calculateDecendents(this);
+		calculateDecendents(this);
 	}
 		
 	private int calculateDecendents(BinarySearchTreeImpl<T> tree) {
@@ -474,7 +469,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		LinkedList<BinarySearchTreeImpl<T>> recorridoAnchuraDcha = new LinkedList<BinarySearchTreeImpl<T>>();
 		LinkedList<BinarySearchTreeImpl<T>> elementosDcha = new LinkedList<BinarySearchTreeImpl<T>>();
 		
-		if(getLeftBST() != null)
+		if(getLeftBST().content != null)
 		recorridoAnchuraIzq.add(getLeftBST());
 		
 		
@@ -488,9 +483,10 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 				recorridoAnchuraIzq.add(actual.getLeftBST());
 			if(actual.getRightBST().content!=null)
 				recorridoAnchuraIzq.add(actual.getRightBST());
+			
 		}
 		
-		if(getRightBST() != null)
+		if(getRightBST().content != null)
 		recorridoAnchuraDcha.add(getRightBST());
 		
 
@@ -512,7 +508,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 			
 			BinarySearchTreeImpl<T> actual = elementosIzq.pollLast();
 			BinarySearchTreeImpl<T> padreActual = actual.father;
-			if(padreActual !=null && (padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) {
+			if(padreActual !=null && ((padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null))) {
 				onlyChilds++;
 				actual.setTag("onlySon", onlyChilds);
 				
@@ -523,7 +519,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 			
 			BinarySearchTreeImpl<T> actual = elementosDcha.pollLast();
 			BinarySearchTreeImpl<T> padreActual = actual.father;
-			if(padreActual !=null && (padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) {
+			if(padreActual !=null && ((padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) ) {
 				onlyChilds++;
 				actual.setTag("onlySon", onlyChilds);
 			}
