@@ -127,7 +127,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		
 		while(iterador.hasNext()) {
 			if(iterador.next()==null)
-				return 0;
+				throw new IllegalArgumentException();
 		}
 		
 		//Si no tiene elementos nulos
@@ -156,7 +156,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		
 		for(T element : elements) {
 			if(element == null)
-				return 0;
+				throw new IllegalArgumentException();
 		}
 		
 		int elemsIntroducidos = 0;
@@ -240,6 +240,8 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 	public void remove(T ... elements) {
 		
 		for(T element : elements) {
+			if(element==null)
+				throw new IllegalArgumentException();
 			if(!this.contains(element))
 				throw new NoSuchElementException();
 		}	
@@ -475,6 +477,8 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		if(getLeftBST() != null)
 		recorridoAnchuraIzq.add(getLeftBST());
 		
+		
+		
 		while(recorridoAnchuraIzq.size()!=0) {
 			
 			BinarySearchTreeImpl<T> actual = recorridoAnchuraIzq.poll();
@@ -489,6 +493,8 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 		if(getRightBST() != null)
 		recorridoAnchuraDcha.add(getRightBST());
 		
+
+		
 		while(recorridoAnchuraDcha.size()!=0) {
 			
 			BinarySearchTreeImpl<T> actual = recorridoAnchuraDcha.poll();
@@ -500,9 +506,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 				recorridoAnchuraDcha.add(actual.getRightBST());
 		}
 		
-		
 		//Invertir las listas y añadir tags
-		
 		
 		while(!elementosIzq.isEmpty()) {
 			
@@ -510,7 +514,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 			BinarySearchTreeImpl<T> padreActual = actual.father;
 			if(padreActual !=null && (padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) {
 				onlyChilds++;
-				actual.setTag("onlyChild", onlyChilds);
+				actual.setTag("onlySon", onlyChilds);
 				
 			}
 		}
@@ -521,12 +525,11 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends
 			BinarySearchTreeImpl<T> padreActual = actual.father;
 			if(padreActual !=null && (padreActual.getLeftBST().content!=null) ^  (padreActual.getRightBST().content!=null)) {
 				onlyChilds++;
-				actual.setTag("onlyChild", onlyChilds);
+				actual.setTag("onlySon", onlyChilds);
 			}
 		
 		}
-		
-		
+
 		return onlyChilds;		
 	}
 	
